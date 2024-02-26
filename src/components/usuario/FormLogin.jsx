@@ -6,19 +6,24 @@ export default function FormLogin({setRegistrar, setUsuario}) {
     const [nombre, setNombre] = useState("");
     const [password, setPassword] = useState("");
 
-    const login = (nombre, password) =>{
-        fetch(`${URL_SERVER}usuarios?nombre_like=${nombre}`)
+    const login = (name, passwrd) =>{
+        fetch(`${URL_SERVER}usuarios?nombre_like=${name}`)
             .then(response=>{
                 if(response.ok){
                     return response.json();
                 }else{throw new Error(`Error en la solicitud ${response.statusText}`)}
             })
-            .then(usuario=>{
-                if(usuario.length > 0){
-                    if(usuario.password === password){
-                        setUsuario(usuario.nombre);
-                        localStorage.setItem("usuario", JSON.stringify(usuario.id));
+            .then((data)=>{
+                if(data.length > 0){
+                    const usuarioServer = data[0];
+                    if(usuarioServer.password === passwrd){      
+                        localStorage.setItem("usuario", JSON.stringify(usuarioServer.id));
+                        setUsuario(usuarioServer.nombre);
+                    }else{
+                        console.log("Contraseña incorrecta");
                     }
+                }else{
+                    console.log("Usuario no existe");
                 }
             })
             .catch(error=>{
@@ -32,11 +37,11 @@ export default function FormLogin({setRegistrar, setUsuario}) {
 
     return(
         <>
-            <input type="text" placeholder="Nombre" value={nombre} onChange={(e)=>setNombre(e.target.value)}></input>
-            <input type="password" placeholder="Contraseña" value={password} onChange={(e)=>setPassword(e.target.value)}></input>
+            <input type="text" placeholder="Nombre" value={nombre} onChange={(e)=>setNombre(e.target.value)}></input><br />
+            <input type="password" placeholder="Contraseña" value={password} onChange={(e)=>setPassword(e.target.value)}></input><br />
             <button onClick={()=>{login(nombre, password)}}>Login</button>
 
-            <p>¿No estas registrado registrate ahora</p>
+            <p>¿No estas registrado registrate ahora?</p>
             <button onClick={doRegistrar}>Registar</button>
         </>
     )

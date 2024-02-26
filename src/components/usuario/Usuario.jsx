@@ -1,6 +1,6 @@
 import { useState } from "react";
-import FormLogin from "./FormLogin";
 import FormRegistro from "./FormRegistro";
+import IsLogin from "./IsLogin";
 
 export default function Usuario({usuario, setUsuario}) {
 
@@ -8,7 +8,7 @@ export default function Usuario({usuario, setUsuario}) {
    
     return(
         <>
-            {registrar?  <FormRegistro setRegistrar={setRegistrar}/> : <FormLogin usuario={usuario} setUsuario={setUsuario} setRegistrar={setRegistrar}/>}
+            {registrar? <FormRegistro setRegistrar={setRegistrar}/> : <IsLogin usuario={usuario} setUsuario={setUsuario} setRegistrar={setRegistrar}/>}
         </>
     )
 }
