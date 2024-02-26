@@ -8,7 +8,7 @@ export default function Usuario({usuario, setUsuario}) {
    
     return(
         <>
-            {registrar? <FormLogin usuario={usuario} setUsuario={setUsuario}/> :  <FormRegistro/>}
+            {registrar?  <FormRegistro setRegistrar={setRegistrar}/> : <FormLogin usuario={usuario} setUsuario={setUsuario} setRegistrar={setRegistrar}/>}
         </>
     )
 }
